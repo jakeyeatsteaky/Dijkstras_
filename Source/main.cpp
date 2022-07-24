@@ -106,25 +106,29 @@ int main()
 		{std::pair<int, int>(0, 3)}
 	};
 
-	Test* Test1 = new Test(0, edgesTest1, { 0,7,13,27,10,-1 });
-	Test1->doesItPass(dijkstrasAlgorithm(0, edgesTest1));
+	//Test* Test1 = new Test(0, edgesTest1, { 0,7,13,27,10,-1 });
+	//Test1->doesItPass(dijkstrasAlgorithm(0, edgesTest1));
 
-	Test* Test2 = new Test(1, edgesTest2, { -1, 0, -1, -1 });
-	Test2->doesItPass(dijkstrasAlgorithm(1, edgesTest2));
+	//Test* Test2 = new Test(1, edgesTest2, { -1, 0, -1, -1 });
+	//Test2->doesItPass(dijkstrasAlgorithm(1, edgesTest2));
 
-	Test* Test4 = new Test(4, edgesTest4, { 2, 5, 4, 1, 0 });
-	Test4->doesItPass(dijkstrasAlgorithm(4, edgesTest4));
+	//Test* Test4 = new Test(4, edgesTest4, { 2, 5, 4, 1, 0 });
+	//Test4->doesItPass(dijkstrasAlgorithm(4, edgesTest4));
 
-	Test* Test5 = new Test(1, edgesTest5, { 1, 0, -1, -1 });
-	Test5->doesItPass(dijkstrasAlgorithm(1, edgesTest5));
+	//Test* Test5 = new Test(1, edgesTest5, { 1, 0, -1, -1 });
+	//Test5->doesItPass(dijkstrasAlgorithm(1, edgesTest5));
 
-	Test* Test6 = new Test(3, edgesTest6, { 0,1, 2, 3, 4, 5, 6, 7 });
-	Test6->doesItPass(dijkstrasAlgorithm(0, edgesTest6));
+	//Test* Test6 = new Test(3, edgesTest6, { 0,1, 2, 3, 4, 5, 6, 7 });
+	//Test6->doesItPass(dijkstrasAlgorithm(0, edgesTest6));
 
-	
-	
+	std::vector<int> test3Resutls = dijkstrasAlgorithm(7, edgesTest3);
 
+	//something with the findMinNotVisited function.  The second time around, the check for whether or not a node is contained in distances is incorrect
 
+	for (int nums : test3Resutls)
+	{
+		std::cout << nums << std::endl;
+	}
 }
 
 void print3Dvec(vec3d edges)
@@ -170,6 +174,7 @@ int findMinNotVisited(std::vector<int> distances, std::vector<int> visited)
 			}
 				
 		}
+
 			
 	}
 	return idxOfShortestDistance;
