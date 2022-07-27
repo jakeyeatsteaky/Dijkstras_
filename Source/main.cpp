@@ -4,7 +4,7 @@ std::vector<int> dijkstrasAlgorithm(int start, vec3d edges);
 
 void print3Dvec(vec3d edges);
 
-int findMinNotVisited(std::vector<int> distances, std::vector<int> visited);
+std::pair<int,int> findMinNotVisited(std::vector<int> distances, std::vector<int> visited);
 
 const int inf = INT_MAX;
 
@@ -155,56 +155,60 @@ void print3Dvec(vec3d edges)
 		}
 }
 
-int findMinNotVisited(std::vector<int> distances, std::vector<int> visited)
+std::pair<int,int> findMinNotVisited(std::vector<int> distances, std::vector<int> visited)
 {
-	int idxOfShortestDistance = inf;
+	int minDistance = inf;
+	int nextNode;
 
 	for (int i = 0; i < distances.size(); i++)
 	{
-		if (distances[i] < idxOfShortestDistance)
+		if (distances[i] < minDistance)
 		{
-			std::vector<int>::iterator it = std::find(visited.begin(), visited.end(), distances[i]);
-			if (it != visited.end() )
+			std::vector<int>::iterator it = std::find(visited.begin(), visited.end(), i);
+			if (it == visited.end())
 			{
-				continue;
+				minDistance = distances[i];
+				nextNode = i;
 			}
 			else
 			{
-				idxOfShortestDistance = i;
+				continue;
 			}
-				
+
 		}
 
-			
+
 	}
-	return idxOfShortestDistance;
+	return std::pair<int, int>(nextNode, minDistance);
 }
 
 std::vector<int> dijkstrasAlgorithm(int start, vec3d edges)
 {
 	std::vector<int> distances(edges.size(), inf); distances[start]=0;
 	std::vector<int> visited{};
-
+	
+	
 	while (visited.size() < edges.size())
 	{
 		// check to see what is the shortest number in distances that has not yet been visited
-		int nextNode = findMinNotVisited(distances, visited);
-
+		std::pair<int,int> next = findMinNotVisited(distances, visited);
+		
 		// look at all outgoing edges from that node (nextNode)
-		for (std::pair<int, int> destsAndWeights : edges[nextNode])
+		for (std::pair<int, int> destsAndWeights : edges[next.first])
 		{
 			// we need to add the weight from the start node to the current node
 
-			if (destsAndWeights.second < distances[destsAndWeights.first])
+			if (destsAndWeights.second <= distances[destsAndWeights.first])
 			{
-				distances[destsAndWeights.first] = destsAndWeights.second + distances[nextNode];
+				distances[destsAndWeights.first] = destsAndWeights.second + next.second;
 			}
 			else
 				continue;
 		}
 
+		
 		// add nextNode to visited
-		visited.push_back(nextNode);
+		visited.push_back(next.first);
 	}
 
 	for (int i = 0; i < distances.size(); i++)
